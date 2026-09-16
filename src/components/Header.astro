@@ -3,8 +3,8 @@ import ThemeToggle from './ThemeToggle.astro';
 import LangSwitch from './LangSwitch.astro';
 import { getLangFromUrl, useTranslations, localeHome, getLocalizedPath } from '../i18n/utils';
 
-interface Props { showBlog?: boolean }
-const { showBlog = false } = Astro.props;
+interface Props { showBlog?: boolean; homeOnlyLang?: boolean }
+const { showBlog = false, homeOnlyLang = false } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -37,7 +37,7 @@ if (showBlog) links.push({ href: getLocalizedPath('/blog', lang), label: t('nav.
     </nav>
 
     <div class="tools">
-      <LangSwitch />
+      <LangSwitch homeOnly={homeOnlyLang} />
       <ThemeToggle />
     </div>
   </div>
@@ -95,8 +95,17 @@ if (showBlog) links.push({ href: getLocalizedPath('/blog', lang), label: t('nav.
     gap: var(--space-3);
   }
   @media (max-width: 560px) {
+    .bar {
+      gap: var(--space-3) var(--space-4);
+    }
     .mark {
-      margin-inline-end: 0;
+      font-size: var(--step-0);
+    }
+    .tools {
+      order: 1;
+    }
+    nav {
+      order: 2;
       flex: 1 0 100%;
     }
     nav ul {

@@ -1,9 +1,11 @@
 ---
-import { getLangFromUrl, getLocalizedPath, useTranslations } from '../i18n/utils';
+import { getLangFromUrl, getLocalizedPath, useTranslations, localeHome } from '../i18n/utils';
 const lang = getLangFromUrl(Astro.url);
 const other = lang === 'fr' ? 'en' : 'fr';
 const t = useTranslations(lang);
-const href = getLocalizedPath(Astro.url.pathname, other);
+interface Props { homeOnly?: boolean }
+const { homeOnly = false } = Astro.props;
+const href = homeOnly ? localeHome(other) : getLocalizedPath(Astro.url.pathname, other);
 ---
 <a class="lang" href={href} hreflang={other} lang={other} aria-label={t('lang.switch')}>
   {t('lang.label')}

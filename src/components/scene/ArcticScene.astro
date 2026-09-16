@@ -6,8 +6,11 @@ import Sun from './Sun.astro';
 import Icebergs from './Icebergs.astro';
 import Waterline from './Waterline.astro';
 import Caustics from './Caustics.astro';
+
+interface Props { variant?: 'full' | 'shallow' }
+const { variant = 'shallow' } = Astro.props;
 ---
-<div class="scene" aria-hidden="true">
+<div class="scene" data-variant={variant} aria-hidden="true">
   <Sky />
   <Sun />
   <Aurora />
@@ -19,6 +22,8 @@ import Caustics from './Caustics.astro';
 
 <style>
   .scene {
+    --horizon: 9rem;
+    --berg-h: 6rem;
     position: absolute;
     inset-inline: 0;
     top: 0;
@@ -27,5 +32,9 @@ import Caustics from './Caustics.astro';
     pointer-events: none;
     overflow: hidden;
     contain: paint;
+  }
+  .scene[data-variant='full'] {
+    --horizon: 100vh;
+    --berg-h: 21rem;
   }
 </style>

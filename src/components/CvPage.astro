@@ -41,7 +41,7 @@ const { Content } = await render(entry);
 <style>
   .cv {
     color: var(--text-deep);
-    padding-block: var(--space-6) var(--space-8);
+    padding-block: var(--space-4) var(--space-8);
   }
   .head {
     display: flex;
@@ -104,8 +104,14 @@ const { Content } = await render(entry);
       gap: var(--space-4);
     }
     .portrait {
-      inline-size: 4.5rem;
-      block-size: 4.5rem;
+      inline-size: 4rem;
+      block-size: 4rem;
+    }
+    h1 {
+      font-size: var(--step-3);
+    }
+    .lead {
+      font-size: var(--step--1);
     }
   }
 </style>

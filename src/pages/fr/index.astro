@@ -4,6 +4,6 @@ import Home from '../../components/Home.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 const t = useTranslations(getLangFromUrl(Astro.url));
 ---
-<Base title="Arditore — investigation numérique et développement full-stack" description={t('hero.role')}>
+<Base title="Arditore — investigation numérique et développement full-stack" description={t('hero.role')} scene="full">
   <Home />
 </Base>

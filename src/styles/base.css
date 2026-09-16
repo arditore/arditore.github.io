@@ -74,10 +74,25 @@ pre {
   font-size: 0.92em;
 }
 
+code {
+  overflow-wrap: anywhere;
+}
+
 :focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
   border-radius: 3px;
+  box-shadow:
+    0 0 0 2px var(--ice),
+    0 0 0 5px var(--accent),
+    0 0 0 7px var(--deep-2);
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 3px solid CanvasText;
+    box-shadow: none;
+  }
 }
 
 .eyebrow {
@@ -125,7 +140,7 @@ pre {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  background: var(--accent);
+  background: var(--accent-strong);
   color: var(--accent-ink);
   padding: var(--space-3) var(--space-5);
   border-radius: 999px;

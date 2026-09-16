@@ -36,7 +36,7 @@ export const ui = {
     'projects.next.3': 'Self-hosted, dependency-light web services',
     'projects.next.4': 'Anything that removes a tracker from a phone',
     'projects.open': 'Open repository',
-    'projects.read': 'Read more',
+    'projects.read': 'Read about',
     'projects.all': 'All projects',
     'projects.updated': 'Updated',
 
@@ -101,7 +101,7 @@ export const ui = {
     'projects.next.3': 'Services web auto-hébergés et légers en dépendances',
     'projects.next.4': 'Tout ce qui retire un traceur d’un téléphone',
     'projects.open': 'Ouvrir le dépôt',
-    'projects.read': 'En savoir plus',
+    'projects.read': 'Découvrir',
     'projects.all': 'Tous les projets',
     'projects.updated': 'Mis à jour',
 

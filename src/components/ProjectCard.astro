@@ -24,8 +24,8 @@ const statusKey = `status.${entry.data.status}` as 'status.active' | 'status.wip
   </ul>
 
   <div class="actions">
-    <a class="cta" href={href}>{t('projects.read')}</a>
-    <a class="repo" href={entry.data.repo}>{t('projects.open')}</a>
+    <a class="cta" href={href}>{t('projects.read')} {entry.data.title}</a>
+    <a class="repo" href={entry.data.repo} aria-label={`${t('projects.open')} — ${entry.data.title}`}>{t('projects.open')}</a>
   </div>
 </article>
 

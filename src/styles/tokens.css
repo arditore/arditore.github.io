@@ -47,6 +47,7 @@
   --radius: 14px;
   --dur-slow: 45s;
   --accent: #e63946;
+  --accent-strong: #d73146;
   --accent-ink: #ffffff;
 
   --text-deep: #eaf6fc;
@@ -59,12 +60,12 @@
   --sky-3: #e4f6fd;
   --ice: #edf8fd;
   --ice-dim: #c6e9f8;
-  --deep-1: #2a6d8c;
+  --deep-1: #1c5268;
   --deep-2: #0c3a50;
   --light: #ffe07a;
   --halo: #fff3c4;
   --text: #0c3a50;
-  --text-dim: #2a6d8c;
+  --text-dim: #1a4658;
   --surface: rgb(255 255 255 / 0.62);
   --border: rgb(12 58 80 / 0.16);
 

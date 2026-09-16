@@ -11,15 +11,17 @@ interface Props {
   title: string;
   description: string;
   showBlog?: boolean;
+  notFound?: boolean;
+  scene?: 'full' | 'shallow';
 }
 
-const { title, description, showBlog = false } = Astro.props;
+const { title, description, showBlog = false, notFound = false, scene = 'shallow' } = Astro.props;
 const lang: Lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const path = Astro.url.pathname;
-const enHref = new URL(getLocalizedPath(path, 'en'), Astro.site).href;
-const frHref = new URL(getLocalizedPath(path, 'fr'), Astro.site).href;
+const enHref = new URL(notFound ? '/' : getLocalizedPath(path, 'en'), Astro.site).href;
+const frHref = new URL(notFound ? '/fr/' : getLocalizedPath(path, 'fr'), Astro.site).href;
 const canonical = new URL(path, Astro.site).href;
 const ogImage = new URL('/og.png', Astro.site).href;
 ---
@@ -64,9 +66,9 @@ const ogImage = new URL('/og.png', Astro.site).href;
 
   <body>
     <a class="skip-link" href="#main">{t('nav.skip')}</a>
-    <ArcticScene />
-    <Header showBlog={showBlog} />
-    <main id="main" tabindex="-1">
+    <ArcticScene variant={scene} />
+    <Header showBlog={showBlog} homeOnlyLang={notFound} />
+    <main id="main" tabindex="-1" data-scene={scene}>
       <slot />
     </main>
     <Footer />
@@ -76,6 +78,14 @@ const ogImage = new URL('/og.png', Astro.site).href;
 <style>
   main {
     position: relative;
+  }
+  main[data-scene='shallow'] {
+    padding-block-start: 5rem;
+  }
+  @media (max-width: 560px) {
+    main[data-scene='shallow'] {
+      padding-block-start: 2.5rem;
+    }
   }
   main:focus {
     outline: none;

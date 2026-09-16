@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { useTranslations, localeHome } from '../i18n/utils';
 const t = useTranslations('en');
 ---
-<Base title="404 — Arditore" description="Page not found.">
+<Base title="404 — Arditore" description="Page not found." notFound>
   <section class="lost">
     <div class="wrap">
       <p class="code">404</p>
@@ -24,7 +24,7 @@ const t = useTranslations('en');
   .code {
     font-family: var(--font-mono);
     font-size: var(--step-2);
-    color: var(--accent);
+    color: var(--text-deep-dim);
     letter-spacing: 0.2em;
   }
   h1 {
