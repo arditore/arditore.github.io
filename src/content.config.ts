@@ -8,7 +8,7 @@ const projects = defineCollection({
     title: z.string(),
     summary: z.string(),
     status: z.enum(['active', 'wip', 'archived']),
-    repo: z.string().url(),
+    repo: z.url(),
     tech: z.array(z.string()),
     topics: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
