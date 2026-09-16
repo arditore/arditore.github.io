@@ -1,0 +1,83 @@
+---
+import ArcticScene from '../components/scene/ArcticScene.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, getLocalizedPath, useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+interface Props {
+  title: string;
+  description: string;
+  showBlog?: boolean;
+}
+
+const { title, description, showBlog = false } = Astro.props;
+const lang: Lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const path = Astro.url.pathname;
+const enHref = new URL(getLocalizedPath(path, 'en'), Astro.site).href;
+const frHref = new URL(getLocalizedPath(path, 'fr'), Astro.site).href;
+const canonical = new URL(path, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="fr" href={frHref} />
+    <link rel="alternate" hreflang="x-default" href={enHref} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_GB'} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={title} href={lang === 'fr' ? '/fr/rss.xml' : '/rss.xml'} />
+
+    <link rel="preload" href="/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">{t('nav.skip')}</a>
+    <ArcticScene />
+    <Header showBlog={showBlog} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    position: relative;
+  }
+  main:focus {
+    outline: none;
+  }
+</style>

@@ -1,0 +1,106 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import LangSwitch from './LangSwitch.astro';
+import { getLangFromUrl, useTranslations, localeHome, getLocalizedPath } from '../i18n/utils';
+
+interface Props { showBlog?: boolean }
+const { showBlog = false } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const here = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const links = [
+  { href: localeHome(lang), label: t('nav.home') },
+  { href: getLocalizedPath('/projects', lang), label: t('nav.projects') },
+  { href: getLocalizedPath('/cv', lang), label: t('nav.cv') },
+];
+if (showBlog) links.push({ href: getLocalizedPath('/blog', lang), label: t('nav.blog') });
+---
+<header class="header">
+  <div class="bar wrap">
+    <a class="mark" href={localeHome(lang)}>
+      <span class="mark-name">Arditore</span>
+    </a>
+
+    <nav aria-label={t('nav.label')}>
+      <ul>
+        {links.map((l) => {
+          const target = l.href.replace(/\/$/, '') || '/';
+          return (
+            <li>
+              <a href={l.href} aria-current={target === here ? 'page' : undefined}>{l.label}</a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <div class="tools">
+      <LangSwitch />
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: relative;
+    z-index: 2;
+    padding-block: var(--space-4);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .mark {
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    font-size: var(--step-1);
+    margin-inline-end: auto;
+  }
+  nav ul {
+    display: flex;
+    gap: var(--space-5);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  nav a {
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    text-decoration: none;
+    color: var(--text-dim);
+  }
+  nav a:hover,
+  nav a[aria-current='page'] {
+    color: var(--text);
+  }
+  nav a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  @media (max-width: 560px) {
+    .mark {
+      margin-inline-end: 0;
+      flex: 1 0 100%;
+    }
+    nav ul {
+      gap: var(--space-4);
+    }
+  }
+</style>

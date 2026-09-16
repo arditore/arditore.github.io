@@ -1,6 +1,6 @@
 ---
-import Base from '../layouts/Base.astro';
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import Base from '../../layouts/Base.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 const t = useTranslations(getLangFromUrl(Astro.url));
 ---
 <Base title="Arditore" description={t('hero.role')}>
