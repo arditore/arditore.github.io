@@ -59,6 +59,11 @@ export const ui = {
     'blog.empty': 'Nothing published yet.',
     'blog.rss': 'RSS feed',
     'blog.published': 'Published',
+    'blog.toc': 'Contents',
+    'blog.article': 'article',
+    'blog.articles': 'articles',
+    'blog.readingTime': 'min read',
+    'blog.back': 'All writing',
 
     'notfound.title': 'Off the map',
     'notfound.body': 'This page is below the waterline and out of reach.',
@@ -125,6 +130,11 @@ export const ui = {
     'blog.empty': 'Rien de publié pour l’instant.',
     'blog.rss': 'Flux RSS',
     'blog.published': 'Publié le',
+    'blog.toc': 'Sommaire',
+    'blog.article': 'article',
+    'blog.articles': 'articles',
+    'blog.readingTime': 'min de lecture',
+    'blog.back': 'Tous les écrits',
 
     'notfound.title': 'Hors carte',
     'notfound.body': 'Cette page est sous la ligne de flottaison, hors de portée.',

@@ -1,85 +1,202 @@
 ---
-import { postsFor, postSlug } from '../lib/blog';
+import { postsFor, postSlug, wordCount } from '../lib/blog';
 import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const posts = await postsFor(lang);
 const feed = lang === 'fr' ? '/fr/rss.xml' : '/rss.xml';
+
+const entries = posts.map((post) => ({
+  title: post.data.title,
+  description: post.data.description,
+  date: post.data.pubDate,
+  iso: post.data.pubDate.toISOString(),
+  day: post.data.pubDate.toISOString().slice(0, 10),
+  year: post.data.pubDate.getUTCFullYear(),
+  tags: post.data.tags,
+  minutes: Math.max(1, Math.round(wordCount(post.body ?? '') / 200)),
+  href: getLocalizedPath(`/blog/${postSlug(post)}`, lang),
+}));
 ---
 <section class="index">
-  <div class="wrap">
+  <div class="wrap head">
     <p class="eyebrow">{t('nav.blog')}</p>
     <h1>{t('blog.title')}</h1>
+    <p class="count">
+      <span>{entries.length} {entries.length === 1 ? t('blog.article') : t('blog.articles')}</span>
+      <a class="feed" href={feed}>{t('blog.rss')}</a>
+    </p>
+  </div>
 
-    {posts.length === 0 ? (
+  <div class="wrap">
+    {entries.length === 0 ? (
       <p class="empty">{t('blog.empty')}</p>
     ) : (
-      <ul class="list">
-        {posts.map((post) => (
+      <ol class="list">
+        {entries.map((post, i) => (
           <li>
-            <a href={getLocalizedPath(`/blog/${postSlug(post)}`, lang)}>{post.data.title}</a>
-            <time datetime={post.data.pubDate.toISOString()}>
-              {post.data.pubDate.toISOString().slice(0, 10)}
-            </time>
-            <p>{post.data.description}</p>
+            <a class="row" href={post.href}>
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+
+              <span class="main">
+                <span class="title">{post.title}</span>
+                <span class="desc">{post.description}</span>
+
+                {post.tags.length > 0 && (
+                  <span class="tags">
+                    {post.tags.map((tag) => <span class="tag">{tag}</span>)}
+                  </span>
+                )}
+              </span>
+
+              <span class="meta">
+                <time datetime={post.iso}>{post.day}</time>
+                <span class="mins">{post.minutes} {t('blog.readingTime')}</span>
+              </span>
+            </a>
           </li>
         ))}
-      </ul>
+      </ol>
     )}
-
-    <p class="feed"><a href={feed}>{t('blog.rss')}</a></p>
   </div>
 </section>
 
 <style>
   .index {
     color: var(--text-deep);
-    padding-block: var(--space-7) var(--space-8);
+    padding-block: var(--space-6) var(--space-8);
+  }
+  .head {
+    padding-block-end: var(--space-6);
+    border-block-end: 1px solid var(--border-deep);
+    margin-block-end: var(--space-5);
   }
   .eyebrow {
     color: var(--text-deep-dim);
   }
   h1 {
     font-size: var(--step-4);
-    margin-block: var(--space-3) var(--space-6);
+    margin-block: var(--space-3) var(--space-4);
   }
+  .count {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-deep-dim);
+    margin: 0;
+  }
+  .feed {
+    color: var(--text-deep);
+  }
+
   .empty {
     color: var(--text-deep-dim);
     font-family: var(--font-display);
     font-size: var(--step-1);
+    padding-block: var(--space-6);
   }
+
   .list {
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+  .list li + li {
+    border-block-start: 1px solid var(--border-deep);
+  }
+
+  .row {
     display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr) auto;
     gap: var(--space-5);
-  }
-  .list li {
-    padding-block-end: var(--space-5);
-    border-block-end: 1px solid var(--border-deep);
-  }
-  .list a {
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    font-weight: 600;
+    align-items: start;
+    padding-block: var(--space-5);
     text-decoration: none;
+    border-radius: var(--radius);
+    transition: background-color 150ms ease;
   }
-  .list time {
-    display: block;
+  .row:hover {
+    background: var(--surface-deep);
+  }
+
+  .num {
     font-family: var(--font-mono);
     font-size: var(--step--1);
     color: var(--text-deep-dim);
-    margin-block-start: var(--space-2);
+    padding-block-start: 0.45rem;
   }
-  .list p {
-    color: var(--text-deep-dim);
-    margin-block-start: var(--space-3);
+  .row:hover .num {
+    color: var(--accent);
   }
-  .feed {
-    margin-block-start: var(--space-6);
+
+  .main {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .title {
     font-family: var(--font-display);
+    font-size: var(--step-2);
     font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .row:hover .title {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+  .desc {
+    color: var(--text-deep-dim);
+    max-width: 62ch;
+    line-height: 1.6;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-deep);
+    color: var(--text-deep-dim);
+  }
+
+  .meta {
+    display: grid;
+    gap: var(--space-2);
+    justify-items: end;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-deep-dim);
+    white-space: nowrap;
+    padding-block-start: 0.35rem;
+  }
+
+  @media (max-width: 48rem) {
+    .row {
+      grid-template-columns: 2rem minmax(0, 1fr);
+      gap: var(--space-4);
+    }
+    .meta {
+      grid-column: 2;
+      justify-items: start;
+      grid-auto-flow: column;
+      gap: var(--space-3);
+      padding-block-start: 0;
+    }
+    .title {
+      font-size: var(--step-1);
+    }
   }
 </style>

@@ -1,0 +1,256 @@
+---
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  title: string;
+  lead: string;
+  pubDate: Date;
+  tags?: string[];
+  words: number;
+  headings: MarkdownHeading[];
+}
+
+const { title, lead, pubDate, tags = [], words, headings } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const sections = headings.filter((h) => h.depth === 2);
+const showToc = sections.length >= 3;
+const published = pubDate.toISOString().slice(0, 10);
+const minutes = Math.max(1, Math.round(words / 200));
+---
+
+<article class="article">
+  <header class="wrap head">
+    <p class="eyebrow">{t('nav.blog')}</p>
+    <h1>{title}</h1>
+    <p class="lead">{lead}</p>
+
+    <p class="meta">
+      <time datetime={pubDate.toISOString()}>{published}</time>
+      <span aria-hidden="true">·</span>
+      <span>{minutes} {t('blog.readingTime')}</span>
+    </p>
+
+    {tags.length > 0 && (
+      <ul class="tags">
+        {tags.map((tag) => <li>{tag}</li>)}
+      </ul>
+    )}
+  </header>
+
+  <div class="wrap layout" data-toc={showToc ? 'yes' : 'no'}>
+    {showToc && (
+      <aside class="toc-wrap">
+        <details class="toc" open>
+          <summary>{t('blog.toc')}</summary>
+          <nav aria-label={t('blog.toc')}>
+            <ol>
+              {sections.map((h) => (
+                <li><a href={`#${h.slug}`}>{h.text}</a></li>
+              ))}
+            </ol>
+          </nav>
+        </details>
+      </aside>
+    )}
+
+    <div class="body">
+      <slot />
+
+      <p class="back">
+        <a href={getLocalizedPath('/blog', lang)}>{t('blog.back')}</a>
+      </p>
+    </div>
+  </div>
+</article>
+
+<style>
+  .article {
+    color: var(--text-deep);
+    padding-block: var(--space-6) var(--space-8);
+  }
+
+  .head {
+    padding-block-end: var(--space-6);
+    border-block-end: 1px solid var(--border-deep);
+  }
+  .head .eyebrow {
+    color: var(--text-deep-dim);
+  }
+  h1 {
+    font-size: var(--step-4);
+    margin-block: var(--space-3) var(--space-4);
+    max-width: 20ch;
+  }
+  .lead {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: 1.4;
+    color: var(--text-deep);
+    max-width: 48ch;
+  }
+  .meta {
+    display: flex;
+    gap: var(--space-3);
+    align-items: baseline;
+    margin-block-start: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-deep-dim);
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin-block-start: var(--space-4);
+  }
+  .tags li {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-deep);
+    color: var(--text-deep-dim);
+  }
+
+  .layout {
+    margin-block-start: var(--space-6);
+  }
+  .body {
+    max-width: 44rem;
+  }
+
+  @media (min-width: 62rem) {
+    .layout[data-toc='yes'] {
+      display: grid;
+      grid-template-columns: minmax(0, 15rem) minmax(0, 44rem);
+      gap: var(--space-7);
+      align-items: start;
+    }
+    .toc-wrap {
+      position: sticky;
+      top: var(--space-5);
+    }
+  }
+
+  .toc {
+    border-inline-start: 2px solid var(--border-deep);
+    padding-inline-start: var(--space-4);
+  }
+  .toc summary {
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-deep-dim);
+    cursor: pointer;
+    margin-block-end: var(--space-3);
+  }
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-3);
+    counter-reset: toc;
+  }
+  .toc li {
+    counter-increment: toc;
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    align-items: baseline;
+  }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-deep-dim);
+  }
+  .toc a {
+    font-size: var(--step--1);
+    line-height: 1.35;
+    color: var(--text-deep-dim);
+    text-decoration: none;
+  }
+  .toc a:hover {
+    color: var(--text-deep);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+  }
+
+  .body :global(h2) {
+    font-size: var(--step-2);
+    margin-block: var(--space-7) var(--space-4);
+    scroll-margin-top: var(--space-5);
+  }
+  .body :global(h3) {
+    font-size: var(--step-1);
+    margin-block: var(--space-6) var(--space-3);
+    scroll-margin-top: var(--space-5);
+  }
+  .body :global(p) {
+    margin-block: var(--space-4);
+    color: var(--text-deep-dim);
+    max-width: none;
+    line-height: 1.7;
+  }
+  .body :global(strong) {
+    color: var(--text-deep);
+    font-weight: 600;
+  }
+  .body :global(a) {
+    color: var(--text-deep);
+    text-decoration-color: var(--accent);
+  }
+  .body :global(ul),
+  .body :global(ol) {
+    margin-block: var(--space-4);
+    color: var(--text-deep-dim);
+    display: grid;
+    gap: var(--space-3);
+    line-height: 1.7;
+  }
+  .body :global(li)::marker {
+    color: var(--accent);
+  }
+  .body :global(code) {
+    background: rgb(234 246 252 / 0.09);
+    padding: 0.12em 0.4em;
+    border-radius: 5px;
+    color: var(--text-deep);
+  }
+  .body :global(pre) {
+    border: 1px solid var(--border-deep);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    overflow-x: auto;
+    margin-block: var(--space-5);
+  }
+  .body :global(blockquote) {
+    margin-block: var(--space-5);
+    padding-inline-start: var(--space-4);
+    border-inline-start: 3px solid var(--accent);
+    color: var(--text-deep);
+  }
+  .body :global(hr) {
+    border: 0;
+    border-block-start: 1px solid var(--border-deep);
+    margin-block: var(--space-7);
+  }
+
+  .back {
+    margin-block-start: var(--space-7);
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--border-deep);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+</style>

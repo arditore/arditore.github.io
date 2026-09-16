@@ -18,3 +18,11 @@ export async function hasPosts(lang: Lang): Promise<boolean> {
 export function postSlug(entry: PostEntry): string {
   return entry.id.replace(/^(en|fr)\//, '');
 }
+
+export function wordCount(body: string): number {
+  return body
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/[#>*_`\[\]()-]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean).length;
+}

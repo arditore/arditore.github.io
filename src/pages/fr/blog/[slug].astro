@@ -1,9 +1,8 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import Prose from '../../../layouts/Prose.astro';
+import Article from '../../../layouts/Article.astro';
 import { render } from 'astro:content';
-import { postsFor, postSlug } from '../../../lib/blog';
-import { getLangFromUrl, useTranslations } from '../../../i18n/utils';
+import { postsFor, postSlug, wordCount } from '../../../lib/blog';
 
 export async function getStaticPaths() {
   const posts = await postsFor('fr');
@@ -11,24 +10,18 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
-const t = useTranslations(getLangFromUrl(Astro.url));
-const published = entry.data.pubDate.toISOString().slice(0, 10);
+const { Content, headings } = await render(entry);
+const words = wordCount(entry.body ?? '');
 ---
 <Base title={`${entry.data.title} — Arditore`} description={entry.data.description}>
-  <Prose title={entry.data.title} eyebrow={t('nav.blog')} lead={entry.data.description}>
-    <p slot="meta" class="published">
-      {t('blog.published')} <time datetime={entry.data.pubDate.toISOString()}>{published}</time>
-    </p>
+  <Article
+    title={entry.data.title}
+    lead={entry.data.description}
+    pubDate={entry.data.pubDate}
+    tags={entry.data.tags}
+    words={words}
+    headings={headings}
+  >
     <Content />
-  </Prose>
+  </Article>
 </Base>
-
-<style>
-  .published {
-    margin-block-start: var(--space-5);
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    color: var(--text-deep-dim);
-  }
-</style>
