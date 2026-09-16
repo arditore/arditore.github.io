@@ -1,0 +1,28 @@
+<div class="caustics" aria-hidden="true"></div>
+
+<style>
+  .caustics {
+    position: absolute;
+    inset-inline: 0;
+    top: 100vh;
+    height: 62vh;
+    background:
+      repeating-linear-gradient(
+        104deg,
+        transparent 0 58px,
+        color-mix(in oklab, var(--ice) 22%, transparent) 58px 92px,
+        transparent 92px 168px
+      );
+    opacity: 0.16;
+    mask-image: linear-gradient(180deg, rgb(0 0 0 / 0.95) 0%, transparent 100%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .caustics {
+      animation: shimmer 30s linear infinite alternate;
+    }
+  }
+  @keyframes shimmer {
+    from { background-position: 0 0; }
+    to   { background-position: 220px 40px; }
+  }
+</style>

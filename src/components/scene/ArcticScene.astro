@@ -1,0 +1,31 @@
+---
+import Sky from './Sky.astro';
+import Aurora from './Aurora.astro';
+import Stars from './Stars.astro';
+import Sun from './Sun.astro';
+import Icebergs from './Icebergs.astro';
+import Waterline from './Waterline.astro';
+import Caustics from './Caustics.astro';
+---
+<div class="scene" aria-hidden="true">
+  <Sky />
+  <Sun />
+  <Aurora />
+  <Stars />
+  <Icebergs />
+  <Waterline />
+  <Caustics />
+</div>
+
+<style>
+  .scene {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 190vh;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    contain: paint;
+  }
+</style>

@@ -80,8 +80,6 @@ pre {
   border-radius: 3px;
 }
 
-/* ---- utilitaires ---- */
-
 .eyebrow {
   font-family: var(--font-display);
   font-size: var(--step--1);
@@ -148,7 +146,6 @@ pre {
   white-space: nowrap;
 }
 
-/* Coupe globale de la motion décorative. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

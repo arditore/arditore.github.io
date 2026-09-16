@@ -1,0 +1,27 @@
+<div class="water">
+  <div class="surface"></div>
+</div>
+
+<style>
+  .water {
+    position: absolute;
+    inset-inline: 0;
+    top: 100vh;
+    height: 90vh;
+    background: linear-gradient(180deg, var(--deep-1) 0%, var(--deep-2) 72%, var(--deep-2) 100%);
+  }
+  .surface {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--ice) 18%,
+      var(--ice) 82%,
+      transparent 100%
+    );
+    opacity: 0.55;
+  }
+</style>

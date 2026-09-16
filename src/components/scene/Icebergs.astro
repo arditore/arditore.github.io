@@ -1,0 +1,49 @@
+<svg class="bergs" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="bergFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--ice)" stop-opacity="0.55"></stop>
+      <stop offset="100%" stop-color="var(--deep-1)" stop-opacity="0.55"></stop>
+    </linearGradient>
+    <linearGradient id="bergMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--ice)" stop-opacity="0.85"></stop>
+      <stop offset="100%" stop-color="var(--deep-1)" stop-opacity="0.8"></stop>
+    </linearGradient>
+    <linearGradient id="bergNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--ice)"></stop>
+      <stop offset="100%" stop-color="var(--deep-1)"></stop>
+    </linearGradient>
+  </defs>
+
+  <g class="berg-far">
+    <path d="M0 330 L96 250 L164 306 L250 214 L338 312 L432 244 L520 330 L648 236 L742 322 L858 232 L968 320 L1082 252 L1200 328 L1200 420 L0 420 Z"
+      fill="url(#bergFar)"></path>
+  </g>
+  <g class="berg-mid">
+    <path d="M-40 366 L88 300 L150 348 L244 268 L330 352 L410 306 L470 366 Z" fill="url(#bergMid)"></path>
+    <path d="M700 366 L790 292 L858 344 L942 276 L1024 350 L1108 302 L1240 366 Z" fill="url(#bergMid)"></path>
+  </g>
+  <g class="berg-near">
+    <path d="M430 396 L520 300 L566 342 L622 268 L700 352 L760 316 L820 396 Z" fill="url(#bergNear)"></path>
+    <path d="M60 400 L128 342 L176 376 L232 330 L296 400 Z" fill="url(#bergNear)"></path>
+  </g>
+</svg>
+
+<style>
+  .bergs {
+    position: absolute;
+    inset-inline: 0;
+    top: calc(100vh - 340px);
+    width: 100%;
+    height: 340px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .berg-near { animation: rise-near linear both; animation-timeline: scroll(); }
+      .berg-mid  { animation: rise-mid  linear both; animation-timeline: scroll(); }
+      .berg-far  { animation: rise-far  linear both; animation-timeline: scroll(); }
+    }
+  }
+  @keyframes rise-near { to { transform: translateY(-16%); } }
+  @keyframes rise-mid  { to { transform: translateY(-9%); } }
+  @keyframes rise-far  { to { transform: translateY(-4%); } }
+</style>

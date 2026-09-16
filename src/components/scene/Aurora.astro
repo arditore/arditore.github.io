@@ -1,0 +1,56 @@
+<svg class="aurora" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="auroraA" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0%" stop-color="var(--light)" stop-opacity="0"></stop>
+      <stop offset="42%" stop-color="var(--light)" stop-opacity="0.5"></stop>
+      <stop offset="72%" stop-color="var(--halo)" stop-opacity="0.34"></stop>
+      <stop offset="100%" stop-color="var(--halo)" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="auroraB" x1="1" y1="0" x2="0" y2="0.6">
+      <stop offset="0%" stop-color="var(--halo)" stop-opacity="0"></stop>
+      <stop offset="50%" stop-color="var(--light)" stop-opacity="0.26"></stop>
+      <stop offset="100%" stop-color="var(--light)" stop-opacity="0"></stop>
+    </linearGradient>
+  </defs>
+
+  <g class="ribbon ribbon-a">
+    <path
+      d="M-120 150 Q140 40 420 120 Q700 200 940 90 Q1120 10 1320 92 L1320 214 Q1100 130 920 190 Q660 276 400 206 Q150 142 -120 250 Z"
+      fill="url(#auroraA)"></path>
+  </g>
+  <g class="ribbon ribbon-b">
+    <path
+      d="M-120 268 Q180 196 460 262 Q740 328 1000 238 Q1160 184 1320 246 L1320 330 Q1120 276 960 322 Q700 398 440 336 Q190 280 -120 356 Z"
+      fill="url(#auroraB)"></path>
+  </g>
+</svg>
+
+<style>
+  .aurora {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: var(--aurora-opacity);
+    transition: opacity 600ms ease;
+  }
+  .ribbon {
+    transform-origin: 50% 30%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ribbon-a {
+      animation: drift-a var(--dur-slow) ease-in-out infinite alternate;
+    }
+    .ribbon-b {
+      animation: drift-b calc(var(--dur-slow) * 1.4) ease-in-out infinite alternate;
+    }
+  }
+  @keyframes drift-a {
+    from { transform: translate3d(-3%, 0, 0) scaleY(1); }
+    to   { transform: translate3d(4%, 2%, 0) scaleY(1.14); }
+  }
+  @keyframes drift-b {
+    from { transform: translate3d(3%, 1%, 0) scaleY(1.08); }
+    to   { transform: translate3d(-4%, -2%, 0) scaleY(0.92); }
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+
+const stars = [
+  [120, 58, 1.8, 0], [205, 104, 1.3, 1.4], [318, 44, 1.6, 2.8], [448, 88, 1.2, 0.7],
+  [560, 40, 1.7, 3.5], [668, 108, 1.2, 1.9], [754, 52, 1.5, 4.2], [884, 122, 1.3, 2.3],
+  [1128, 64, 1.6, 0.4], [82, 172, 1.2, 3.1], [268, 200, 1.4, 1.1], [392, 148, 1.1, 4.6],
+  [512, 214, 1.5, 2.0], [640, 168, 1.2, 0.9], [812, 206, 1.4, 3.8], [1046, 152, 1.3, 1.6],
+  [1170, 224, 1.5, 2.6], [160, 262, 1.1, 4.0], [352, 292, 1.3, 1.3], [596, 276, 1.2, 3.3],
+  [728, 318, 1.4, 0.2], [940, 288, 1.2, 2.2], [1092, 332, 1.3, 4.4], [446, 356, 1.1, 1.7],
+];
+---
+<svg class="stars" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  {stars.map(([cx, cy, r, delay]) => (
+    <circle cx={cx} cy={cy} r={r} fill="#eaf6fc" style={`--d:${delay}s`}></circle>
+  ))}
+</svg>
+
+<style>
+  .stars {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: var(--aurora-opacity);
+    transition: opacity 600ms ease;
+  }
+  .stars circle {
+    opacity: 0.85;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .stars circle {
+      animation: twinkle 6s ease-in-out infinite;
+      animation-delay: var(--d, 0s);
+    }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.85; }
+    50% { opacity: 0.28; }
+  }
+</style>
