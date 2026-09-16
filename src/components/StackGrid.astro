@@ -1,0 +1,126 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+import rust from './icons/rust.svg?raw';
+import python from './icons/python.svg?raw';
+import kotlin from './icons/kotlin.svg?raw';
+import php from './icons/php.svg?raw';
+import javascript from './icons/javascript.svg?raw';
+import html5 from './icons/html5.svg?raw';
+import css from './icons/css.svg?raw';
+import react from './icons/react.svg?raw';
+import vue from './icons/vue.svg?raw';
+import node from './icons/node.svg?raw';
+import mysql from './icons/mysql.svg?raw';
+import linux from './icons/linux.svg?raw';
+import android from './icons/android.svg?raw';
+import git from './icons/git.svg?raw';
+
+const t = useTranslations(getLangFromUrl(Astro.url));
+
+const groups = [
+  {
+    label: t('stack.languages'),
+    items: [
+      { name: 'Rust', svg: rust },
+      { name: 'Python', svg: python },
+      { name: 'Kotlin', svg: kotlin },
+      { name: 'PHP', svg: php },
+      { name: 'JavaScript', svg: javascript },
+    ],
+  },
+  {
+    label: t('stack.frontend'),
+    items: [
+      { name: 'HTML', svg: html5 },
+      { name: 'CSS', svg: css },
+      { name: 'React', svg: react },
+      { name: 'Vue', svg: vue },
+    ],
+  },
+  {
+    label: t('stack.backend'),
+    items: [
+      { name: 'Node.js', svg: node },
+      { name: 'MySQL', svg: mysql },
+      { name: 'Linux', svg: linux },
+      { name: 'Android', svg: android },
+      { name: 'Git', svg: git },
+    ],
+  },
+];
+---
+
+<section class="stack-section" aria-labelledby="stack-title">
+  <div class="wrap">
+    <h2 id="stack-title">{t('stack.title')}</h2>
+    <div class="groups">
+      {groups.map((g) => (
+        <div class="group">
+          <p class="eyebrow">{g.label}</p>
+          <ul>
+            {g.items.map((i) => (
+              <li>
+                <span class="icon" set:html={i.svg} />
+                <span>{i.name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack-section {
+    padding-block: var(--space-7);
+    color: var(--text-deep);
+  }
+  h2 {
+    font-size: var(--step-3);
+    margin-block-end: var(--space-6);
+  }
+  .groups {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+  .group .eyebrow {
+    color: var(--text-deep-dim);
+    margin-block-end: var(--space-4);
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-deep);
+    background: var(--surface-deep);
+    font-size: var(--step--1);
+    font-family: var(--font-mono);
+  }
+  .icon {
+    display: grid;
+    place-items: center;
+    inline-size: 1rem;
+    block-size: 1rem;
+    color: var(--text-deep-dim);
+  }
+  .icon :global(svg) {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+  li:hover .icon {
+    color: var(--accent);
+  }
+</style>

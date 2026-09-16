@@ -1,0 +1,133 @@
+---
+import { getCollection } from 'astro:content';
+import Hero from './Hero.astro';
+import StackGrid from './StackGrid.astro';
+import ProjectCard from './ProjectCard.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const all = await getCollection('projects');
+const projects = all
+  .filter((e) => e.id.startsWith(`${lang}/`))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const next = [
+  t('projects.next.1'),
+  t('projects.next.2'),
+  t('projects.next.3'),
+  t('projects.next.4'),
+];
+---
+
+<Hero />
+
+<div class="depth">
+  <StackGrid />
+
+  <section class="projects" aria-labelledby="projects-title">
+    <div class="wrap">
+      <h2 id="projects-title">{t('projects.title')}</h2>
+      <div class="grid">
+        {projects.map((entry) => <ProjectCard entry={entry} />)}
+
+        <article class="card next">
+          <h3>{t('projects.next')}</h3>
+          <p>{t('projects.next.body')}</p>
+          <ul>
+            {next.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <p class="eyebrow">{t('contact.title')}</p>
+      <h2 id="contact-title">
+        <a href="mailto:arditore@tuta.io">arditore@tuta.io</a>
+      </h2>
+      <p class="note">{t('contact.body')}</p>
+      <p class="links">
+        <a class="cta" href="mailto:arditore@tuta.io">{t('contact.title')}</a>
+        <a href={getLocalizedPath('/cv', lang)}>{t('nav.cv')}</a>
+      </p>
+    </div>
+  </section>
+</div>
+
+<style>
+  .depth {
+    color: var(--text-deep);
+  }
+  h2 {
+    font-size: var(--step-3);
+  }
+  .projects {
+    padding-block: var(--space-7);
+  }
+  .projects h2 {
+    margin-block-end: var(--space-6);
+  }
+  .grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  }
+  .next {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border-radius: var(--radius);
+    border: 1px dashed var(--border-deep);
+    background: transparent;
+  }
+  .next h3 {
+    font-size: var(--step-2);
+    margin: 0;
+  }
+  .next p {
+    color: var(--text-deep-dim);
+    margin: 0;
+  }
+  .next ul {
+    margin: 0;
+    padding-inline-start: 1.1em;
+    color: var(--text-deep-dim);
+    display: grid;
+    gap: var(--space-2);
+  }
+  .contact {
+    padding-block: var(--space-7);
+  }
+  .contact h2 {
+    font-size: clamp(1.6rem, 1rem + 3vw, 3rem);
+    margin-block: var(--space-3) var(--space-4);
+    word-break: break-word;
+  }
+  .contact h2 a {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    letter-spacing: -0.02em;
+  }
+  .contact h2 a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+  }
+  .contact .eyebrow {
+    color: var(--text-deep-dim);
+  }
+  .note {
+    color: var(--text-deep-dim);
+  }
+  .links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    margin-block-start: var(--space-5);
+    flex-wrap: wrap;
+  }
+</style>

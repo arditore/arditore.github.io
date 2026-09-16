@@ -1,0 +1,76 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+<section class="hero">
+  <div class="wrap inner">
+    <div class="text">
+      <p class="eyebrow">{t('hero.role')}</p>
+      <h1>Arditore</h1>
+      <p class="tagline">{t('hero.tagline')}</p>
+      <p class="intro">{t('hero.intro')}</p>
+    </div>
+    <img
+      class="portrait"
+      src="/avatar.jpg"
+      alt={t('hero.portrait')}
+      width="266"
+      height="266"
+      loading="eager"
+      decoding="async"
+    />
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-block-size: calc(100vh - 6rem);
+    display: grid;
+    align-items: center;
+    padding-block: var(--space-7) var(--space-8);
+  }
+  .inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-7);
+    align-items: center;
+  }
+  h1 {
+    font-size: var(--step-5);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    margin-block: var(--space-3) var(--space-4);
+  }
+  .tagline {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1.25;
+    max-width: 22ch;
+    color: var(--text);
+  }
+  .intro {
+    margin-block-start: var(--space-5);
+    color: var(--text-dim);
+    max-width: 54ch;
+  }
+  .portrait {
+    inline-size: clamp(9rem, 18vw, 15rem);
+    block-size: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--ice);
+    box-shadow: 0 18px 50px rgb(5 25 42 / 0.28);
+  }
+  @media (max-width: 720px) {
+    .inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+    .portrait {
+      order: -1;
+      inline-size: 7.5rem;
+    }
+  }
+</style>

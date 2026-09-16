@@ -1,30 +1,44 @@
+---
+---
 <svg class="bergs" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="bergFar" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="var(--ice)" stop-opacity="0.55"></stop>
-      <stop offset="100%" stop-color="var(--deep-1)" stop-opacity="0.55"></stop>
+      <stop offset="0%" stop-color="var(--ice)" stop-opacity="0.42"></stop>
+      <stop offset="100%" stop-color="var(--deep-1)" stop-opacity="0.5"></stop>
     </linearGradient>
     <linearGradient id="bergMid" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="var(--ice)" stop-opacity="0.85"></stop>
+      <stop offset="0%" stop-color="var(--ice)" stop-opacity="0.78"></stop>
+      <stop offset="62%" stop-color="var(--ice-dim)" stop-opacity="0.7"></stop>
       <stop offset="100%" stop-color="var(--deep-1)" stop-opacity="0.8"></stop>
     </linearGradient>
     <linearGradient id="bergNear" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="var(--ice)"></stop>
+      <stop offset="55%" stop-color="var(--ice-dim)"></stop>
       <stop offset="100%" stop-color="var(--deep-1)"></stop>
+    </linearGradient>
+    <linearGradient id="bergFace" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="var(--deep-1)" stop-opacity="0.34"></stop>
+      <stop offset="100%" stop-color="var(--deep-1)" stop-opacity="0"></stop>
     </linearGradient>
   </defs>
 
   <g class="berg-far">
-    <path d="M0 330 L96 250 L164 306 L250 214 L338 312 L432 244 L520 330 L648 236 L742 322 L858 232 L968 320 L1082 252 L1200 328 L1200 420 L0 420 Z"
+    <path d="M0 420 L0 384 L64 376 L92 390 L150 378 L206 392 L246 372 L318 388 L372 376 L430 390 L486 374 L548 388 L604 378 L668 392 L726 374 L790 388 L846 378 L910 390 L968 374 L1032 388 L1092 378 L1148 390 L1200 380 L1200 420 Z"
       fill="url(#bergFar)"></path>
   </g>
+
   <g class="berg-mid">
-    <path d="M-40 366 L88 300 L150 348 L244 268 L330 352 L410 306 L470 366 Z" fill="url(#bergMid)"></path>
-    <path d="M700 366 L790 292 L858 344 L942 276 L1024 350 L1108 302 L1240 366 Z" fill="url(#bergMid)"></path>
+    <path d="M-30 420 L-16 368 L52 360 L70 338 L156 332 L172 358 L248 366 L266 420 Z" fill="url(#bergMid)"></path>
+    <path d="M330 420 L344 356 L392 350 L404 326 L470 320 L484 352 L534 360 L548 420 Z" fill="url(#bergMid)"></path>
+    <path d="M880 420 L894 350 L958 342 L972 314 L1048 308 L1062 346 L1132 354 L1152 420 Z" fill="url(#bergMid)"></path>
   </g>
+
   <g class="berg-near">
-    <path d="M430 396 L520 300 L566 342 L622 268 L700 352 L760 316 L820 396 Z" fill="url(#bergNear)"></path>
-    <path d="M60 400 L128 342 L176 376 L232 330 L296 400 Z" fill="url(#bergNear)"></path>
+    <path d="M96 420 L112 322 L158 312 L174 278 L242 270 L258 316 L306 328 L322 420 Z" fill="url(#bergNear)"></path>
+    <path d="M112 322 L158 312 L174 278 L182 420 L96 420 Z" fill="url(#bergFace)"></path>
+
+    <path d="M596 420 L614 292 L672 280 L690 236 L764 228 L782 286 L838 298 L856 420 Z" fill="url(#bergNear)"></path>
+    <path d="M614 292 L672 280 L690 236 L700 420 L596 420 Z" fill="url(#bergFace)"></path>
   </g>
 </svg>
 
@@ -38,12 +52,33 @@
   }
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: scroll()) {
-      .berg-near { animation: rise-near linear both; animation-timeline: scroll(); }
-      .berg-mid  { animation: rise-mid  linear both; animation-timeline: scroll(); }
-      .berg-far  { animation: rise-far  linear both; animation-timeline: scroll(); }
+      .berg-near {
+        animation: rise-near linear both;
+        animation-timeline: scroll();
+      }
+      .berg-mid {
+        animation: rise-mid linear both;
+        animation-timeline: scroll();
+      }
+      .berg-far {
+        animation: rise-far linear both;
+        animation-timeline: scroll();
+      }
     }
   }
-  @keyframes rise-near { to { transform: translateY(-16%); } }
-  @keyframes rise-mid  { to { transform: translateY(-9%); } }
-  @keyframes rise-far  { to { transform: translateY(-4%); } }
+  @keyframes rise-near {
+    to {
+      transform: translateY(-16%);
+    }
+  }
+  @keyframes rise-mid {
+    to {
+      transform: translateY(-9%);
+    }
+  }
+  @keyframes rise-far {
+    to {
+      transform: translateY(-4%);
+    }
+  }
 </style>

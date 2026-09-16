@@ -1,0 +1,116 @@
+---
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { entry: CollectionEntry<'projects'> }
+const { entry } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const slug = entry.id.replace(/^(en|fr)\//, '');
+const href = getLocalizedPath(`/projects/${slug}`, lang);
+const statusKey = `status.${entry.data.status}` as 'status.active' | 'status.wip' | 'status.archived';
+---
+<article class="card">
+  <header>
+    <h3><a href={href}>{entry.data.title}</a></h3>
+    <span class={`status status-${entry.data.status}`}>{t(statusKey)}</span>
+  </header>
+
+  <p class="summary">{entry.data.summary}</p>
+
+  <ul class="tech">
+    {entry.data.tech.map((tech) => <li>{tech}</li>)}
+  </ul>
+
+  <div class="actions">
+    <a class="cta" href={href}>{t('projects.read')}</a>
+    <a class="repo" href={entry.data.repo}>{t('projects.open')}</a>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-deep);
+    background: var(--surface-deep);
+    color: var(--text-deep);
+    backdrop-filter: blur(10px);
+    block-size: 100%;
+  }
+  header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  h3 {
+    font-size: var(--step-2);
+    margin: 0;
+  }
+  h3 a {
+    text-decoration: none;
+  }
+  h3 a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+  }
+  .status {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-deep);
+    color: var(--text-deep-dim);
+    white-space: nowrap;
+  }
+  .status-active {
+    color: var(--light);
+    border-color: color-mix(in oklab, var(--light) 50%, transparent);
+  }
+  .summary {
+    color: var(--text-deep-dim);
+    margin: 0;
+    max-width: none;
+  }
+  .tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .tech li {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-deep-dim);
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    background: rgb(234 246 252 / 0.07);
+  }
+  .actions {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    flex-wrap: wrap;
+    margin-block-start: auto;
+    padding-block-start: var(--space-2);
+  }
+  .repo {
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--text-deep-dim);
+  }
+  .repo:hover {
+    color: var(--text-deep);
+  }
+</style>
