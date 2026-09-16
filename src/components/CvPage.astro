@@ -1,0 +1,111 @@
+---
+import { getEntry, render } from 'astro:content';
+import TermsNotice from './TermsNotice.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const entry = (await getEntry('cv', lang)) ?? (await getEntry('cv', 'en'));
+if (!entry) throw new Error('Contenu de CV introuvable');
+const { Content } = await render(entry);
+---
+<article class="cv">
+  <header class="wrap head">
+    <img
+      class="portrait"
+      src="/avatar.jpg"
+      alt={t('hero.portrait')}
+      width="266"
+      height="266"
+      loading="eager"
+      decoding="async"
+    />
+    <div>
+      <p class="eyebrow">{t('cv.title')}</p>
+      <h1>Arditore</h1>
+      <p class="lead">{t('cv.subtitle')}</p>
+    </div>
+  </header>
+
+  <div class="wrap band">
+    <TermsNotice />
+    <p class="privacy">{t('cv.privacy')}</p>
+  </div>
+
+  <div class="wrap body">
+    <Content />
+  </div>
+</article>
+
+<style>
+  .cv {
+    color: var(--text-deep);
+    padding-block: var(--space-6) var(--space-8);
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .portrait {
+    inline-size: 6rem;
+    block-size: 6rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--ice);
+  }
+  .head .eyebrow {
+    color: var(--text-deep-dim);
+  }
+  h1 {
+    font-size: var(--step-4);
+    margin-block: var(--space-2) var(--space-2);
+  }
+  .lead {
+    color: var(--text-deep-dim);
+    margin: 0;
+  }
+  .band {
+    margin-block-start: var(--space-5);
+  }
+  .privacy {
+    font-size: var(--step--1);
+    color: var(--text-deep-dim);
+    max-width: 60ch;
+  }
+  .body {
+    max-width: min(100% - 2rem, 44rem);
+    margin-inline: auto;
+    margin-block-start: var(--space-6);
+  }
+  .body :global(h2) {
+    font-size: var(--step-2);
+    margin-block: var(--space-6) var(--space-4);
+    padding-block-start: var(--space-4);
+    border-block-start: 1px solid var(--border-deep);
+  }
+  .body :global(p) {
+    margin-block: var(--space-4);
+    color: var(--text-deep-dim);
+    max-width: none;
+  }
+  .body :global(strong) {
+    color: var(--text-deep);
+    font-weight: 600;
+  }
+  .body :global(a) {
+    color: var(--text-deep);
+    text-decoration-color: var(--accent);
+  }
+  @media (max-width: 560px) {
+    .head {
+      gap: var(--space-4);
+    }
+    .portrait {
+      inline-size: 4.5rem;
+      block-size: 4.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+import { postsFor, postSlug } from '../lib/blog';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const posts = await postsFor(lang);
+const feed = lang === 'fr' ? '/fr/rss.xml' : '/rss.xml';
+---
+<section class="index">
+  <div class="wrap">
+    <p class="eyebrow">{t('nav.blog')}</p>
+    <h1>{t('blog.title')}</h1>
+
+    {posts.length === 0 ? (
+      <p class="empty">{t('blog.empty')}</p>
+    ) : (
+      <ul class="list">
+        {posts.map((post) => (
+          <li>
+            <a href={getLocalizedPath(`/blog/${postSlug(post)}`, lang)}>{post.data.title}</a>
+            <time datetime={post.data.pubDate.toISOString()}>
+              {post.data.pubDate.toISOString().slice(0, 10)}
+            </time>
+            <p>{post.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <p class="feed"><a href={feed}>{t('blog.rss')}</a></p>
+  </div>
+</section>
+
+<style>
+  .index {
+    color: var(--text-deep);
+    padding-block: var(--space-7) var(--space-8);
+  }
+  .eyebrow {
+    color: var(--text-deep-dim);
+  }
+  h1 {
+    font-size: var(--step-4);
+    margin-block: var(--space-3) var(--space-6);
+  }
+  .empty {
+    color: var(--text-deep-dim);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+  }
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-5);
+  }
+  .list li {
+    padding-block-end: var(--space-5);
+    border-block-end: 1px solid var(--border-deep);
+  }
+  .list a {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .list time {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-deep-dim);
+    margin-block-start: var(--space-2);
+  }
+  .list p {
+    color: var(--text-deep-dim);
+    margin-block-start: var(--space-3);
+  }
+  .feed {
+    margin-block-start: var(--space-6);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+</style>

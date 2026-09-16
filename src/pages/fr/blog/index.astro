@@ -1,0 +1,9 @@
+---
+import Base from '../../../layouts/Base.astro';
+import BlogIndex from '../../../components/BlogIndex.astro';
+import { hasPosts } from '../../../lib/blog';
+const showBlog = await hasPosts('fr');
+---
+<Base title="Écrits — Arditore" description="Notes sur l'investigation numérique, les systèmes et la vie privée." showBlog={showBlog}>
+  <BlogIndex />
+</Base>

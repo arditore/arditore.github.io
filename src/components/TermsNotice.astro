@@ -1,0 +1,31 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+<aside class="terms" aria-labelledby="terms-title">
+  <p class="eyebrow" id="terms-title">{t('cv.terms')}</p>
+  <p class="body">{t('cv.p2p')}</p>
+</aside>
+
+<style>
+  .terms {
+    margin-block: var(--space-5);
+    padding: var(--space-5);
+    border-radius: var(--radius);
+    border: 1px solid color-mix(in oklab, var(--accent) 55%, transparent);
+    border-inline-start: 4px solid var(--accent);
+    background: color-mix(in oklab, var(--accent) 11%, var(--surface-deep));
+  }
+  .eyebrow {
+    color: var(--accent);
+    margin-block-end: var(--space-3);
+  }
+  .body {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: 1.4;
+    color: var(--text-deep);
+    max-width: 46ch;
+    margin: 0;
+  }
+</style>

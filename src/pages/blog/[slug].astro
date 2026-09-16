@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import Prose from '../../layouts/Prose.astro';
+import { render } from 'astro:content';
+import { postsFor, postSlug } from '../../lib/blog';
+import { hasPosts } from '../../lib/blog';
+
+export async function getStaticPaths() {
+  const posts = await postsFor('en');
+  return posts.map((entry) => ({ params: { slug: postSlug(entry) }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const showBlog = await hasPosts('en');
+---
+<Base title={`${entry.data.title} — Arditore`} description={entry.data.description} showBlog={showBlog}>
+  <Prose title={entry.data.title} lead={entry.data.description}>
+    <Content />
+  </Prose>
+</Base>

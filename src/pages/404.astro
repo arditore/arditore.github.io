@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { useTranslations, localeHome } from '../i18n/utils';
+const t = useTranslations('en');
+---
+<Base title="404 — Arditore" description="Page not found.">
+  <section class="lost">
+    <div class="wrap">
+      <p class="code">404</p>
+      <h1>{t('notfound.title')}</h1>
+      <p class="body">{t('notfound.body')}</p>
+      <p><a class="cta" href={localeHome('en')}>{t('notfound.back')}</a></p>
+      <p class="alt"><a href={localeHome('fr')}>Version française</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lost {
+    color: var(--text-deep);
+    padding-block: var(--space-8);
+    min-block-size: 50vh;
+  }
+  .code {
+    font-family: var(--font-mono);
+    font-size: var(--step-2);
+    color: var(--accent);
+    letter-spacing: 0.2em;
+  }
+  h1 {
+    font-size: var(--step-4);
+    margin-block: var(--space-3) var(--space-4);
+  }
+  .body {
+    color: var(--text-deep-dim);
+    font-size: var(--step-1);
+    margin-block-end: var(--space-6);
+  }
+  .alt {
+    margin-block-start: var(--space-5);
+    color: var(--text-deep-dim);
+    font-size: var(--step--1);
+  }
+</style>

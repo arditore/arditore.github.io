@@ -1,17 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
 import Hero from './Hero.astro';
 import StackGrid from './StackGrid.astro';
 import ProjectCard from './ProjectCard.astro';
 import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+import { projectList } from '../lib/projects';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
-const all = await getCollection('projects');
-const projects = all
-  .filter((e) => e.id.startsWith(`${lang}/`))
-  .sort((a, b) => a.data.order - b.data.order);
+const projects = await projectList(lang);
 
 const next = [
   t('projects.next.1'),

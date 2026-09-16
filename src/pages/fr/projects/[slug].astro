@@ -1,0 +1,14 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ProjectArticle from '../../../components/ProjectArticle.astro';
+import { projectRoutes } from '../../../lib/projects';
+
+export async function getStaticPaths() {
+  return projectRoutes('fr');
+}
+
+const { entry, untranslated } = Astro.props;
+---
+<Base title={`${entry.data.title} — Arditore`} description={entry.data.summary}>
+  <ProjectArticle entry={entry} untranslated={untranslated} />
+</Base>
