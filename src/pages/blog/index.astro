@@ -4,6 +4,6 @@ import BlogIndex from '../../components/BlogIndex.astro';
 import { hasPosts } from '../../lib/blog';
 const showBlog = await hasPosts('en');
 ---
-<Base title="Writing — Arditore" description="Notes on digital forensics, systems and privacy." showBlog={showBlog}>
+<Base title="Writing — Arditore" description="Notes on digital forensics, systems and privacy.">
   <BlogIndex />
 </Base>

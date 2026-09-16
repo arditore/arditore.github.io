@@ -2,11 +2,13 @@
 import ThemeToggle from './ThemeToggle.astro';
 import LangSwitch from './LangSwitch.astro';
 import { getLangFromUrl, useTranslations, localeHome, getLocalizedPath } from '../i18n/utils';
+import { hasPosts } from '../lib/blog';
 
-interface Props { showBlog?: boolean; homeOnlyLang?: boolean }
-const { showBlog = false, homeOnlyLang = false } = Astro.props;
+interface Props { homeOnlyLang?: boolean }
+const { homeOnlyLang = false } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
+const showBlog = await hasPosts(lang);
 const t = useTranslations(lang);
 const here = Astro.url.pathname.replace(/\/$/, '') || '/';
 

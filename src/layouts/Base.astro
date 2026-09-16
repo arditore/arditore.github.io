@@ -15,7 +15,7 @@ interface Props {
   scene?: 'full' | 'shallow';
 }
 
-const { title, description, showBlog = false, notFound = false, scene = 'shallow' } = Astro.props;
+const { title, description, notFound = false, scene = 'shallow' } = Astro.props;
 const lang: Lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
@@ -67,7 +67,7 @@ const ogImage = new URL('/og.png', Astro.site).href;
   <body>
     <a class="skip-link" href="#main">{t('nav.skip')}</a>
     <ArcticScene variant={scene} />
-    <Header showBlog={showBlog} homeOnlyLang={notFound} />
+    <Header homeOnlyLang={notFound} />
     <main id="main" tabindex="-1" data-scene={scene}>
       <slot />
     </main>

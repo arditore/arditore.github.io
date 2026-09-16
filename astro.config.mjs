@@ -9,6 +9,9 @@ export default defineConfig({
     locales: ['en', 'fr'],
     routing: { prefixDefaultLocale: false },
   },
+  markdown: {
+    shikiConfig: { theme: 'github-dark-high-contrast' },
+  },
   integrations: [sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', fr: 'fr' } } })],
   build: { inlineStylesheets: 'always' },
   prefetch: false,
