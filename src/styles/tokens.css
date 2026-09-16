@@ -1,0 +1,113 @@
+/* Polices auto-hébergées — aucune requête vers Google Fonts ni vers un CDN. */
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/space-grotesk.woff2') format('woff2');
+  font-weight: 300 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.12rem);
+  --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --step-2: clamp(1.6rem, 1.4rem + 1vw, 2.1rem);
+  --step-3: clamp(2rem, 1.6rem + 2vw, 3rem);
+  --step-4: clamp(2.5rem, 1.8rem + 3.5vw, 4.5rem);
+  --step-5: clamp(3rem, 1.8rem + 6vw, 6.5rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2.5rem;
+  --space-7: 4rem;
+  --space-8: 6.5rem;
+
+  --radius: 14px;
+  --dur-slow: 45s;
+  --accent: #e63946;
+  --accent-ink: #ffffff;
+
+  /* Jour polaire */
+  --sky-1: #5fc4e8;
+  --sky-2: #a9e2f6;
+  --sky-3: #e4f6fd;
+  --ice: #edf8fd;
+  --ice-dim: #c6e9f8;
+  --deep-1: #2a6d8c;
+  --deep-2: #0c3a50;
+  --light: #ffe07a;
+  --halo: #fff3c4;
+  --text: #0c3a50;
+  --text-dim: #2a6d8c;
+  --surface: rgb(255 255 255 / 0.62);
+  --border: rgb(12 58 80 / 0.16);
+
+  --aurora-opacity: 0;
+  --sun-opacity: 1;
+}
+
+/* Nuit polaire — choix explicite du visiteur. */
+:root[data-theme='dark'] {
+  --sky-1: #05192a;
+  --sky-2: #0b3a55;
+  --sky-3: #12546f;
+  --ice: #dcf1fa;
+  --ice-dim: #bdddec;
+  --deep-1: #0e4560;
+  --deep-2: #06253a;
+  --light: #4fe0c0;
+  --halo: #6bb7f0;
+  --text: #eaf6fc;
+  --text-dim: #a9c9dc;
+  --surface: rgb(5 25 42 / 0.55);
+  --border: rgb(234 246 252 / 0.16);
+
+  --aurora-opacity: 1;
+  --sun-opacity: 0;
+}
+
+/* Nuit polaire — préférence système, sans JavaScript.
+   Le :not() laisse le choix manuel primer sur l'OS. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --sky-1: #05192a;
+    --sky-2: #0b3a55;
+    --sky-3: #12546f;
+    --ice: #dcf1fa;
+    --ice-dim: #bdddec;
+    --deep-1: #0e4560;
+    --deep-2: #06253a;
+    --light: #4fe0c0;
+    --halo: #6bb7f0;
+    --text: #eaf6fc;
+    --text-dim: #a9c9dc;
+    --surface: rgb(5 25 42 / 0.55);
+    --border: rgb(234 246 252 / 0.16);
+
+    --aurora-opacity: 1;
+    --sun-opacity: 0;
+  }
+}
