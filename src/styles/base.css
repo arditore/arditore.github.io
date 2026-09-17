@@ -78,6 +78,48 @@ code {
   overflow-wrap: anywhere;
 }
 
+table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin-block: var(--space-5);
+  font-size: var(--step--1);
+  line-height: 1.5;
+}
+
+th,
+td {
+  text-align: start;
+  vertical-align: top;
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 1px solid var(--border-deep);
+}
+
+th {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-deep-dim);
+  white-space: nowrap;
+  border-block-end-width: 2px;
+}
+
+td {
+  color: var(--text-deep-dim);
+}
+
+td:first-child {
+  color: var(--text-deep);
+  white-space: nowrap;
+}
+
+tbody tr:last-child td {
+  border-block-end: 0;
+}
+
 :focus-visible {
   outline: 2px solid transparent;
   outline-offset: 2px;

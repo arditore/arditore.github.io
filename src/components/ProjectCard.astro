@@ -2,8 +2,12 @@
 import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
 import type { CollectionEntry } from 'astro:content';
 
-interface Props { entry: CollectionEntry<'projects'> }
-const { entry } = Astro.props;
+interface Props {
+  entry: CollectionEntry<'projects'>;
+  headingLevel?: 2 | 3;
+}
+const { entry, headingLevel = 3 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -13,7 +17,7 @@ const statusKey = `status.${entry.data.status}` as 'status.active' | 'status.wip
 ---
 <article class="card">
   <header>
-    <h3><a href={href}>{entry.data.title}</a></h3>
+    <Heading class="title"><a href={href}>{entry.data.title}</a></Heading>
     <span class={`status status-${entry.data.status}`}>{t(statusKey)}</span>
   </header>
 
@@ -49,14 +53,14 @@ const statusKey = `status.${entry.data.status}` as 'status.active' | 'status.wip
     gap: var(--space-4);
     flex-wrap: wrap;
   }
-  h3 {
+  .title {
     font-size: var(--step-2);
     margin: 0;
   }
-  h3 a {
+  .title a {
     text-decoration: none;
   }
-  h3 a:hover {
+  .title a:hover {
     text-decoration: underline;
     text-decoration-color: var(--accent);
   }

@@ -6,7 +6,7 @@ repo: https://github.com/arditore/Seca
 tech: [Kotlin, Jetpack Compose, Material 3 Expressive, libsignal, Nostr]
 topics: [android, vie-privée, dégooglé, chiffrement-bout-en-bout, grapheneos, fdroid, sms, téléphonie]
 featured: true
-order: 1
+order: 2
 updated: 2026-09-16
 ---
 
